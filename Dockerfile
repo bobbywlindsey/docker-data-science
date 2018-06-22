@@ -1,5 +1,5 @@
 # docker build -t data-science-image .
-# docker run -it --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
+# docker run -it -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
 # docker run -d --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
 # docker exec -it data-science bash
 
@@ -73,8 +73,8 @@ RUN pip install elasticsearch
 RUN pip install psycopg2-binary
 
 # Configure access to Jupyter
+WORKDIR /root/GitProjects
 EXPOSE 8888
-RUN cd ~/GitProjects
 CMD jupyter lab --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token='data-science'
 
 # ENTRYPOINT ["/bin/bash"]
