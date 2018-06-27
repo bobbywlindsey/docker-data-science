@@ -14,5 +14,6 @@ Or run the container in a detached mode so that you can use Jupyter Notebooks bu
 
 ```
 docker run -d --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
-docker exec -it data-science bash
 ```
+
+To use Jupyter Notebooks on your host machine, just navigate to `localhost:8888` and enter the token `data-science`.
