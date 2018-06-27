@@ -1,6 +1,6 @@
-# docker build -t data-science-image .
-# docker run -it -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
-# docker run -d --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i data-science-image
+# docker build -t docker-data-science .
+# docker run -it -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i docker-data-science
+# docker run -d --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i docker-data-science
 # docker exec -it data-science bash
 
 # reference: https://hub.docker.com/_/ubuntu/
