@@ -8,13 +8,20 @@ Any changes to the Dockerfile will be automatically built in Docker Hub, so just
 
 Then you can either run the container interactively:
 
-`docker run -it -v ~/GitProjects:/root/GitProjects --network=host -i bobbywlindsey/docker-data-science`
+1. linux: `docker run -it -v ~/GitProjects:/root/GitProjects --network=host -i bobbywlindsey/docker-data-science`
+2. MacOS or Windows: `docker run -it -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i bobbywlindsey/docker-data-science`
 
 Or run the container in a detached mode so that you can use Jupyter Notebooks but still use bash
 
+1. linux:
 ```
 docker run -d --name data-science -v ~/GitProjects:/root/GitProjects --network=host -i bobbywlindsey/docker-data-science
 docker exec -it data-science bash
 ```
+2. MacOS or Windows:
+```
+docker run -d --name data-science -v ~/GitProjects:/root/GitProjects -p 8888:8888 -i bobbywlindsey/docker-data-science
+docker exec -it data-science bash
+```
 
-To use Jupyter Notebooks on your host machine, just navigate to `localhost:8888` and enter the token `data-science`.
+To use Jupyter Lab on your host machine, just navigate to `localhost:8888` and enter the token `data-science`.
