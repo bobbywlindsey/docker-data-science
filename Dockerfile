@@ -11,27 +11,25 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 RUN mkdir ~/GitProjects
 
 # Install Ubuntu packages
-RUN apt-get update
-RUN apt-get install wget -y 
-RUN apt-get install bzip2 -y 
-RUN apt-get install ca-certificates -y 
-RUN apt-get install build-essential -y 
-RUN apt-get install curl -y 
-RUN apt-get install git-core -y 
-RUN apt-get install htop -y 
-RUN apt-get install pkg-config -y 
-RUN apt-get install unzip -y 
-RUN apt-get install unrar -y 
-RUN apt-get install tree -y 
-RUN apt-get install freetds-dev -y
+RUN apt-get update && apt-get install -y \
+    wget \
+    bzip2 \
+    ca-certificates \
+    build-essential \
+    curl \
+    git-core \
+    htop \
+    pkg-config \
+    unzip \
+    unrar \
+    tree \
+    freetds-dev
 
 # Clean up
-RUN apt-get clean
-RUN rm -rf /var/lib/apt/lists/*
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install Jupyter config
-RUN mkdir ~/.ssh
-RUN touch ~/.ssh/known_hosts
+RUN mkdir ~/.ssh && touch ~/.ssh/known_hosts
 RUN ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts
 RUN git clone https://github.com/bobbywlindsey/dotfiles.git
 RUN mkdir ~/.jupyter
@@ -48,28 +46,23 @@ RUN rm ~/anaconda.sh
 ENV PATH /opt/conda/bin:$PATH
 
 # Update Anaconda
-RUN conda update conda
-RUN conda update anaconda
-RUN conda update --all
+RUN conda update conda && conda update anaconda && conda update --all
 
 # Install Jupyter theme
-RUN pip install msgpack
-RUN pip install jupyterthemes
+RUN pip install msgpack jupyterthemes
 RUN jt -t grade3
 
 # Install other Python packages
 RUN conda install pymssql
-RUN pip install SQLAlchemy
-RUN pip install missingno
-RUN pip install json_tricks
-RUN pip install bcolz
-RUN pip install gensim
-RUN pip install elasticsearch
-RUN pip install psycopg2-binary
+RUN pip install SQLAlchemy \
+    missingno \
+    json_tricks \
+    bcolz \
+    gensim \
+    elasticsearch \
+    psycopg2-binary
 
 # Configure access to Jupyter
 WORKDIR /root/GitProjects
 EXPOSE 8888
 CMD jupyter lab --no-browser --ip=0.0.0.0 --allow-root --NotebookApp.token='data-science'
-
-# ENTRYPOINT ["/bin/bash"]
