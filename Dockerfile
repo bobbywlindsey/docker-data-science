@@ -53,14 +53,15 @@ RUN pip install msgpack jupyterthemes
 RUN jt -t grade3
 
 # Install other Python packages
-RUN conda install pymssql
+RUN conda install pymssql mkl=2018
 RUN pip install SQLAlchemy \
     missingno \
     json_tricks \
     bcolz \
     gensim \
     elasticsearch \
-    psycopg2-binary
+    psycopg2-binary \
+    pymc3
 
 # Configure access to Jupyter
 WORKDIR /root/GitProjects
