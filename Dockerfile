@@ -26,7 +26,9 @@ RUN mkdir ~/GitProjects && \
     ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts && \
     git clone https://github.com/bobbywlindsey/dotfiles.git && \
     mkdir ~/.jupyter && \
+    mkdir -p ~/.jupyter/custom && \
     cp /dotfiles/jupyter_configs/jupyter_notebook_config.py ~/.jupyter/ && \
+    cp /dotfiles/jupyter_configs/custom/custom.js ~/.jupyter/custom/ && \
     rm -rf /dotfiles && \
     # Install Anaconda
     echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
@@ -49,7 +51,13 @@ RUN mkdir ~/GitProjects && \
         gensim \
         elasticsearch \
         psycopg2-binary \
+        jupyter_contrib_nbextensions \
+        jupyter_nbextensions_configurator \
         pymc3 && \
+    jupyter contrib nbextension install --user && \
+    jupyter nbextensions_configurator enable --user && \
+    jupyter nbextension enable codefolding/main && \
+    jupyter nbextension enable collapsible_headings/main && \
     # remove everything you don't need
     apt-get remove -y wget git-core pkg-config
 
