@@ -65,6 +65,7 @@ RUN mkdir ~/GitProjects && \
     # Add vim-binding extension
     mkdir -p $(jupyter --data-dir)/nbextensions && \
     git clone https://github.com/lambdalisue/jupyter-vim-binding $(jupyter --data-dir)/nbextensions/vim_binding && \
+    cd $(jupyter --data-dir)/nbextensions \
     chmod -R go-w vim_binding && \
     # remove everything you don't need
     apt-get remove -y wget git-core pkg-config
