@@ -27,12 +27,14 @@ RUN mkdir ~/GitProjects && \
     git clone https://github.com/bobbywlindsey/dotfiles.git && \
     mkdir ~/.jupyter && \
     mkdir -p ~/.jupyter/custom && \
+    mkdir -p ~/.jupyter/nbconfig && \
     cp /dotfiles/jupyter_configs/jupyter_notebook_config.py ~/.jupyter/ && \
     cp /dotfiles/jupyter_configs/custom/custom.js ~/.jupyter/custom/ && \
+    cp /dotfiles/jupyter_configs/nbconfig/notebook.json ~/.jupyter/nbconfig/ && \
     rm -rf /dotfiles && \
     # Install Anaconda
     echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.anaconda.com/archive/Anaconda3-5.2.0-Linux-x86_64.sh -O ~/anaconda.sh && \
+    wget --quiet https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
     rm ~/anaconda.sh && \
     # Update Anaconda
@@ -42,6 +44,7 @@ RUN mkdir ~/GitProjects && \
     # Install Jupyter theme
     pip install msgpack jupyterthemes && \
     jt -t grade3 && \
+    # Install 
     # Install other Python packages
     conda install pymssql mkl=2018 && \
     pip install SQLAlchemy \
@@ -54,10 +57,15 @@ RUN mkdir ~/GitProjects && \
         jupyter_contrib_nbextensions \
         jupyter_nbextensions_configurator \
         pymc3 && \
+    # Enable Jupyter Notebook extensions
     jupyter contrib nbextension install --user && \
     jupyter nbextensions_configurator enable --user && \
     jupyter nbextension enable codefolding/main && \
     jupyter nbextension enable collapsible_headings/main && \
+    # Add vim-binding extension
+    mkdir -p $(jupyter --data-dir)/nbextensions && \
+    git clone https://github.com/lambdalisue/jupyter-vim-binding $(jupyter --data-dir)/nbextensions/vim_binding && \
+    chmod -R go-w vim_binding && \
     # remove everything you don't need
     apt-get remove -y wget git-core pkg-config
 
